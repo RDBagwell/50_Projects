@@ -6,37 +6,54 @@ let index = 0;
 let progressPrecent = 0;
 
 function addIndex() {
+    index++;
     if(index > -1){
         prevBtn.disabled = false;
     }
-    if(index === circles.length -2){
+    if(index >= circles.length - 1){
+        index = circles.length - 1;
         nextBtn.disabled = true;
     }
-    if(index < circles.length -1){
-        index = index + 1;
-    }
-    progressPrecent = progressPrecent + getPrecent();
-    progressBar.style.width = progressPrecent+'%';
-    circles[index].classList.add('active')
+    circles[index].classList.add('active');
+    addPrecent();
+    updateProgressBar();
 }
 
 function subIndex() {
-    if(index < 2){
+    index--;
+    if(index <= 0){
+        index = 0;
         prevBtn.disabled = true;
+    }
+    if(nextBtn.disabled = true){
         nextBtn.disabled = false;
     }
-    index = index - 1;
-    if(index < 0){
-        index = 0;
+    circles[index+1].classList.remove('active');
+    subPrecent();
+    updateProgressBar();
+}
+
+function addPrecent() {
+    progressPrecent = progressPrecent + getPrecent();
+    if(progressPrecent > 100){
+        progressPrecent = 100
     }
+}
+
+function subPrecent() {
     progressPrecent = progressPrecent - getPrecent();
-    progressBar.style.width = progressPrecent+'%';
-    circles[index+1].classList.remove('active')
+    if(progressPrecent < 0){
+        progressPrecent = 0
+    }
 }
 
 function getPrecent(){
     return Math.trunc(100 / (circles.length -1));
 }
 
+function updateProgressBar() {
+    progressBar.style.width = progressPrecent+'%';
+}
+
 nextBtn.addEventListener('click', addIndex);
-prevBtn.addEventListener('click', subIndex)
+prevBtn.addEventListener('click', subIndex);

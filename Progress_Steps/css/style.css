@@ -2,6 +2,7 @@
 *{
     box-sizing: border-box;
 }
+
 :root{
     --line-border-fill: #3498db;
     --line-border: #a39595;
